@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Booking Details
+{% endblock %}
+
+{% block content %}
+<h1 align="center">Book Your Car</h1>
+<hr>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Booking</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rubik&display=swap"
+        rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
+    <style>
+        #preloader {
+            background:transparent url({% static 'assets/preloader2.gif' %}) no-repeat center;
+            background-size: 20%;
+            height: 100vh;
+            width: 100%;
+            position: fixed;
+            z-index: 100;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="preloader">
+
+    </div>
+    <div class="container-fluid pt-5">
+        <div class="container pt-5 pb-3">
+            <h1 class="display-4 text-uppercase mb-5">{{rentcars.car_model}}</h1>
+            <div class="row align-items-center pb-2">
+                <div class="col-lg-6 mb-4">
+                    <img class="img-fluid" src="{{rentcars.car_image.url}}" alt="car image">
+                </div>
+                <div class="col-lg-6 mb-4">
+                    <span class="display-5 mb-2 border-right">{{rentcars.rate_per_hour}} BDT/Hour</span>
+                    <span class="mb-2">{{rentcars.rate_per_day}} BDT/Day</span>
+                    <hr>
+                    <div class="d-flex mb-3">
+                        <div class="d-flex align-items-center justify-content-center mb-1">
+                            <span>Seating Capacity:</span><span>{{rentcars.seating_capacity}}</span>
+                        </div>
+                    </div>
+                    <div class="d-flex mb-3">
+                        <div class="d-flex align-items-center justify-content-center mb-1">
+                            <span>Fuel Type:</span><span>{{rentcars.fuel_type}}</span>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <div class="container-fluid pb-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h2 class="mb-4">Owner Details:</h2>
+                    <!-- <div class="col-lg-6 mb-4">
+                        <img class="rounded-circle" src="Shazid.jpeg" alt="car image" width="150px">
+                    </div> -->
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Name</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{rentcars.renter_name}}
+                        </div>
+                        <div class="col-sm-3">
+                            <h6 class="mb-0">Phone Number</h6>
+                        </div>
+                        <div class="col-sm-9 text-secondary">
+                            {{rentcars.renter_phone_num}}
+                        </div>
+                    </div>
+
+
+                    <form method="POST" action="#" class="form">
+                        {% csrf_token %}
+                        <h2 class="mb-4">Booking Details:</h2>
+                        <div class="mb-5">
+                            <div class="row">
+                                <div class="col-6 form-group">
+                                    <select name="pickup_loc" class="px-4" style="height: 50px;" required>
+                                        <option value="" selected disabled hidden>Pickup & Drop Location</option>
+                                        <option value="Mirpur">Mirpur</option>
+                                        <option value="Dhanmondi">Dhanmondi</option>
+                                        <option value="Farmgate">Farmgate</option>
+                                        <option value="Uttara">Uttara</option>
+                                        <option value="Gulshan">Gulshan</option>
+                                        <option value="Khilgaoan">Khilgaoan</option>
+                                        <option value="Banani">Banani</option>
+                                        <option value="Mothijhil">Mothijhil</option>
+                                        <!-- Add more options as needed -->
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 form-group">
+                                    <label>Starting Date:</label>
+                                    <div class="date" id="date2" data-target-input="nearest">
+                                        <input type="datetime-local" name="rent_time"
+                                            class="form-control p-4 datetimepicker-input" placeholder="Starting Date"
+                                            data-target="#date2" data-toggle="datetimepicker" required />
+                                    </div>
+                                </div>
+                                <div class="col-6 form-group">
+                                    <label>Ending date:</label>
+                                    <div class="date" id="date3" data-target-input="nearest">
+                                        <input type="datetime-local" name="return_time"
+                                            class="form-control p-4 datetimepicker-input" placeholder="Ending Date"
+                                            data-target="#date2" data-toggle="datetimepicker" required />
+                                    </div>
+                                </div>
+                                <button class="btn btn-block btn-info py-3" href="#">Book Now</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+                <!--                #######-->
+                <div class="col-lg-3">
+                    <div class="p-5 mb-5">
+                        <h2 class="text-capitalize mb-4">Payment</h2>
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment" id="paypal">
+                                <label class="custom-control-label" for="paypal">Bkash</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment" id="directcheck">
+                                <label class="custom-control-label" for="directcheck">Credit Card</label>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <div class="custom-control custom-radio">
+                                <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
+                                <label class="custom-control-label" for="banktransfer">Cash</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var loader = document.getElementById("preloader");
+        window.addEventListener("load", function () {
+            loader.style.display = "none";
+
+        });
+    </script>
+
+
+</body>
+
+</html>
+
+
+{% endblock %}
